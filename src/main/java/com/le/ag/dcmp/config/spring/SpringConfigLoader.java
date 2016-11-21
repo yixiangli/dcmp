@@ -70,7 +70,7 @@ public class SpringConfigLoader extends PropertyPlaceholderConfigurer{
 			InputStream stream = new ByteArrayInputStream(data);
 			String path = "";
 			try {
-				path = ""+ this.getClass().getResource("/zookeeper.properties").toURI();
+				path = ""+ this.getClass().getResource("/properties/zookeeper.properties").toURI();
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -80,8 +80,7 @@ public class SpringConfigLoader extends PropertyPlaceholderConfigurer{
 			FileOperator.writerFile(stream, path);		
 			logger.info("end save the propertis! the path is "+path);
 		} catch (Exception e) {
-			logger.info("save the propertis exception!");
-			logger.info(e.getMessage());
+			logger.info("save the propertis exception!",e);
 		}
 	}
 

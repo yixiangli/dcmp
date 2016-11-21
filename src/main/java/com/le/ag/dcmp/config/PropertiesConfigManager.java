@@ -58,7 +58,7 @@ public class PropertiesConfigManager {
 		InputStream in = null;
 		try {		
 			properties = new Properties();
-			String fileRealPath = "/" + fileName + ".properties";
+			String fileRealPath = "/properties/" + fileName + ".properties";
 			in = getClass().getResourceAsStream(fileRealPath);	
 			properties.load(in);
 			logger.info("Successfully load Properties:" + properties);

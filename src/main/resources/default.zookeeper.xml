@@ -7,7 +7,7 @@
      http://code.zookeeper.com/schema/zk     
       http://code.zookeeper.com/schema/zk/zk.xsd">
 
-    <zk:config id="zkConfigBean" con="${zookeeper.address}" baseSleepTimeMs="1000" maxRetries="3"/>
+    <zk:config id="zkConfigBean" connect="${zookeeper.address}" baseSleepTimeMs="1000" maxRetries="3"/>
 	<zk:client id="zkClientBean" type="Curator" ref="zkConfigBean"/>
 		
 	<bean id="zkServerCenter" class="com.le.ag.dcmp.server.ZKServerCenter">
@@ -18,7 +18,7 @@
 	    <property name="zkServerCenter" ref="zkServerCenter" />	    
 	    <property name="listeners">
 	        <list>            
-            <bean class="com.le.ag.dcmp.listener.PropertiesListener">             
+            <bean class="com.le.ag.dcmp.listener.support.PropertiesListener">             
                 <constructor-arg>
 					<list>					
 						<value>lepush/system_properties</value>						
@@ -33,7 +33,7 @@
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
         <property name="locations">
             <list>
-                <value>classpath*:zookeeper.properties</value>
+                <value>classpath*:properties/zookeeper.properties</value>
             </list>
         </property>
     </bean>
