@@ -33,7 +33,7 @@
 	
 	<!-- demo config -->
 	<!-- 
-		<zk:config id="zkConfigBean" con="10.10.10.10:2181" baseSleepTimeMs="1000" maxRetries="3"/>
+		<zk:config id="zkConfigBean" connect="10.10.10.10:2181" baseSleepTimeMs="1000" maxRetries="3"/>
 		<zk:client id="zkClientBean" type="curator" ref="zkConfigBean"/>	
 	 -->
 	
