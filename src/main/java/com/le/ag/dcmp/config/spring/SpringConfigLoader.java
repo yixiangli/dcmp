@@ -53,7 +53,7 @@ public class SpringConfigLoader extends PropertyPlaceholderConfigurer{
 			// TODO Auto-generated catch block
 			DefaultZookeeperClient.getInstance().close();
 			setPropsFromLocal(props);
-			logger.info(e.getMessage());
+			logger.error("init properties exception",e);
 		}
 		// 初始化加载zk固定配置
 		super.processProperties(beanFactoryToProcess, props);
@@ -73,14 +73,14 @@ public class SpringConfigLoader extends PropertyPlaceholderConfigurer{
 				path = ""+ this.getClass().getResource("/properties/zookeeper.properties").toURI();
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("get local resource uri exception",e);
 			}
 			path = FileOperator.getRootPath(path);	
 			path = path + props.getProperty("zookeeper.local.properties")+ ".properties";
 			FileOperator.writerFile(stream, path);		
 			logger.info("end save the propertis! the path is "+path);
 		} catch (Exception e) {
-			logger.info("save the propertis exception!",e);
+			logger.error("save the propertis exception!",e);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class SpringConfigLoader extends PropertyPlaceholderConfigurer{
 			props.load(in);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("load local properties fail",e);
 		}
 	}
 	

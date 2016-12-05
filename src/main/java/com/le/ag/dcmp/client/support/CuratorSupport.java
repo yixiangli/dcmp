@@ -77,8 +77,7 @@ public class CuratorSupport implements ZookeeperClient {
 			curator.create().forPath(path, new byte[0]);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			logger.error("Curator create node {} error,e:{}",path,e);
-			e.printStackTrace();
+			logger.error("Curator create node {} error:",path,e);
 		}
 	}
 
@@ -97,8 +96,7 @@ public class CuratorSupport implements ZookeeperClient {
 			curator.setData().forPath(path, content);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			logger.error("Curator setData for node {} error,e:{}",path,e);
-			e.printStackTrace();
+			logger.error("Curator setData for node {} error:",path,e);
 		}
 	}
 
@@ -115,7 +113,7 @@ public class CuratorSupport implements ZookeeperClient {
 			return curator.checkExists().forPath(path) == null;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Curator check node {} error:",path,e);
 		}
 		return false;
 	}
@@ -127,7 +125,7 @@ public class CuratorSupport implements ZookeeperClient {
 			return curator.getChildren().forPath(path);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Curator get children node {} error:",path,e);
 		}	
 		return null;
 	}
@@ -143,7 +141,7 @@ public class CuratorSupport implements ZookeeperClient {
 			zkNodeBean.setNumChildren(stat.getNumChildren());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Curator get node state {} error:",path,e);
 		}		
 		return zkNodeBean;
 	}
@@ -165,7 +163,7 @@ public class CuratorSupport implements ZookeeperClient {
 			curator.getUnhandledErrorListenable().addListener(new UnhandledErrorListener() {
 	            @Override
 	            public void unhandledError(String message, Throwable e) {	               
-	            	logger.info("CuratorFramework unhandledError: "+ message);
+	            	logger.error("CuratorFramework unhandledError: "+ message);
 	            }          
 	        });
 	}
