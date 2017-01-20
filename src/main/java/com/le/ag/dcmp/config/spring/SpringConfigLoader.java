@@ -38,22 +38,32 @@ public class SpringConfigLoader extends PropertyPlaceholderConfigurer{
 
 	private static final Logger logger = LoggerFactory.getLogger(SpringConfigLoader.class);
 	
+	private InputStream in_nocode;
+	
 	protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess,Properties props) throws BeansException {
 		try {
 			logger.info("start load the properties from zookeeper!");
 			String node = props.getProperty("zookeeper.spring.properties");
 			DefaultZookeeperClient.getInstance().start();
 			byte[] data = DefaultZookeeperClient.getInstance().getData(ZKRootNodePathEnum.ZKRootNodePathEnum.configuration_path+ "/" + node);
-			InputStream in_nocode = new ByteArrayInputStream(data);
-			props.load(in_nocode);
-			DefaultZookeeperClient.getInstance().close();
+			in_nocode = new ByteArrayInputStream(data);
+			props.load(in_nocode);			
 			createProperties(data, props);
 			logger.info("end load the propertis from zookeeper!");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			DefaultZookeeperClient.getInstance().close();
 			setPropsFromLocal(props);
 			logger.error("init properties exception",e);
+		} finally {
+			DefaultZookeeperClient.getInstance().close();
+			if(null == in_nocode){
+				try {
+					in_nocode.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					logger.error("inputStream close error!");
+				}
+			}			
 		}
 		// 初始化加载zk固定配置
 		super.processProperties(beanFactoryToProcess, props);
